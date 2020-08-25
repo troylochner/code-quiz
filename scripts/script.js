@@ -8,33 +8,39 @@ var testButton = document.querySelector("#tester");
 var questionBook = {"questions":[{"question":"Pick a letter - the answer is a","answer":"1","choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is b","answer":"2","choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is c","answer":"3","choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is d","answer":"4","choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]}]};
 
 
-
 //declare the functions needed to run this application. 
 function renderQuestionPrompt() {
-    // Clear todoList element and update todoCountSpan
+    // Clear question box
     questionBox.innerHTML = "";
-    var questionObject = questionBook[0] // replace with var soon
-    var theChoices = questionBook.questions[0].choices
-
-    //questionBook.questions[0].question
-    //questionBook.questions[0].answer
-     //SET QUESTION
     questionBox.innerText=questionBook.questions[0].question
-    //todoCountSpan.textContent = todos.length;
-
-
+    
+    //CREATE AN OBJECT OF THE QUESTION + ANSWERS
+    var questionObject = questionBook.questions[0] // move to global var after QC
+    console.log("questionObject :" + questionObject);
+    console.log("length :" + questionObject.choices.length )
+    
 // Render a new line for each question
-    for (var i = 0; i < theChoices.length; i++) {
-      var question = questions[0].choices[0].answer[i] ; //todos[i];
-  
-      var li = document.createElement("li");
-      li.textContent = todo;
+    for (var i = 0; i < questionObject.choices.length; i++) {
+      //console.log(i + "|" + questionObject.choices.length );
+      //var questionObject = questions[0].choices[0].header[i] + ". |" + questions[0].choices[0].answer[i] ; //move to global var after QC
+
+      var theQuestion = JSON.stringify(questionObject.choices[0])  ; 
+      console.log(theQuestion) ;
+
+      //CREATE AND APPEND OUR CHOICE
+      var li = document.createElement("li"); // or child element
+      li.textContent = theQuestion;
+      console.log(li.textContent)
       li.setAttribute("data-index", i);
+      
+
+      //CREATE AND APPEND THE BUTTON
   
       var button = document.createElement("button");
-      button.textContent = "Complete";
-  
+      button.textContent = "I choose this !";  
       li.appendChild(button);
+
+//add button 
       answerBox.appendChild(li);
     }
   }
