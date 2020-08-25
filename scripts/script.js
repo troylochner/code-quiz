@@ -24,7 +24,7 @@ function renderQuestionPrompt() {
       //console.log(i + "|" + questionObject.choices.length );
       //var questionObject = questions[0].choices[0].header[i] + ". |" + questions[0].choices[0].answer[i] ; //move to global var after QC
 
-      var theQuestion = JSON.stringify(questionObject.choices[0])  ; 
+      var theQuestion = JSON.stringify(questionObject.choices[i])  ; 
       console.log(theQuestion) ;
 
       //CREATE AND APPEND OUR CHOICE
