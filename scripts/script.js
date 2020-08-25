@@ -7,8 +7,12 @@ var testButton = document.querySelector("#tester");
 var prevButton = document.querySelector("#prev");
 var nextButton = document.querySelector("#next");
 
+
 //minified the json string for ease of reading in larger code. 
 var questionBook = {"questions":[{"question":"Pick a letter - the answer is a","answer":0,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is b","answer":1,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is c","answer":2,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is d","answer":3,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]}]};
+
+//DECLARE Q INDEX AT TOP
+var qIndex = 0;
 
 
 //declare the functions needed to run this application. 
@@ -18,6 +22,7 @@ function loadQuestion(indexQuestion) {
     questionBox.innerText=questionBook.questions[indexQuestion].question
     
     //CREATE AN OBJECT OF THE QUESTION + ANSWERS
+    answerBox.innerHTML = "";
     var questionObject = questionBook.questions[indexQuestion] // move to global var after QC
     console.log("questionObject :" + questionObject);
     console.log("The right answer : "+  questionObject.answer);
@@ -49,49 +54,57 @@ function loadQuestion(indexQuestion) {
     }
   }
 
-
-/*function init(){};*/
 function checkAnswer (questionIndex,answerIndex){
   var theQuestion = questionBook.questions[questionIndex]
   var rightAnswer = theQuestion.answer
+  var score;
 
   if (answerIndex == rightAnswer ){
     confirm("You are smart.");
-    //ADD TO SCORE
+    
   } else {
   confirm("You are kind of stupid.");
-  }
-  //ADD TO SCORE
-  //console.log("Checking question : " + questionIndex);
-  //console.log("You answered : " + answerIndex );
-  //console.log("YThe right answer is " + rightAnswer );
+  };
 
-
-
+  //UPDATE(Score)
+  //Next Question
 
 
 };
-function updateScore(){};
-function saveHighScore(){};
+
+
+function updateScore(){}
+
+function goto(i){
+  return(qIndex + i);
+}
+
+function saveHighScore(){}
 
 
 //ADDED EVENT LISTENERS
 tester.addEventListener("click", function(){
-    loadQuestion(3);
-})
+    loadQuestion(qIndex);
+}) ; 
+
+//NAVIGATION
+prev.addEventListener("click", function(){
+  console.log("back")
+}) ; 
+
+next.addEventListener("click", function(){
+  console.log("forward")
+}) ; 
+
 
 //LISTEN FOR ANSWER
-answerBox.addEventListener("click", function(event){
-  var element = event.target ;
-  if (element.matches("button")===true){
+answerBox.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button") === true) {
     var qIndex = element.getAttribute("data-parent-id");
-    var aindex = element.getAttribute("data-index") ;
-    
+    var aindex = element.getAttribute("data-index");
     //console.log("You choose " + aindex + " Q# " + qIndex);
-
-    checkAnswer(qIndex,aindex)
-
-    
+    checkAnswer(qIndex, aindex)
   }
-})
+}) ; 
 
