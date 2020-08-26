@@ -23,16 +23,44 @@ function beginQuiz(){
  } else {
   console.log("user canceled");
    return;
-
  }
-
 }
+//start the game   //start()
+//hide the start button 
+//set next question
+//shuffle? fn
+//set the next question
+//select answer
 
 
+/////////quiz logic
 //delare a function : liveQuiz ; this function should walk through the qustion book and store the user score. 
 function takeQuiz() {
+  
+
+  //COME BACK TO HERE
+  for ( var i = 0 ; i< questionBook.questions.length ; i++){
+    console.log('hubba'+i);
+    //LISTEN FOR ANSWER
+
+    answerBox.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button") === true) {
+    var qIndex = element.getAttribute("data-parent-id");
+    var aindex = element.getAttribute("data-index");
+    //console.log("You choose " + aindex + " Q# " + qIndex);
+    checkAnswer(qIndex, aindex)
+  }
+}) ; 
+
+
+  }
+  
+
+  /*
  //set score to 0
  var userScore = 0;
+ console.log("takeQuiz -> userScore", userScore)
  console.log("userScore:"+userScore);
  //set time to 5 minutes (300000 ms)
  var timeRemain = 300000 ; 
@@ -41,20 +69,22 @@ function takeQuiz() {
  var quizLength = questionBook.questions.length;
  console.log("quizLength:"+quizLength);
  //set question index to 0
- //for each question in the book
-  //ask the question // get the result
-      //if correct - go to next question
-      //go to next question + reduce the time remaining
-  //when the last question has been answered | or the timer = 0
-  //show the user the result of the quiz
-  //ask the user to store their initials
-  //save the initials + score + time to the local storage
-  //exit the script ( or reset the page)
+ var indexQuestion = 0
+ console.log("takeQuiz -> indexQuestion", indexQuestion)
+ //for each question in the book  */
+
 
 }
 
+////////////////
+
+
+
+
+
 //declare the functions needed to run this application. 
 function loadQuestion(indexQuestion) {
+    //event.preventDefault();
     // Clear question box
     questionBox.innerHTML = "";
     questionBox.innerText=questionBook.questions[indexQuestion].question
@@ -62,6 +92,7 @@ function loadQuestion(indexQuestion) {
     //CREATE AN OBJECT OF THE QUESTION + ANSWERS
     answerBox.innerHTML = "";
     var questionObject = questionBook.questions[indexQuestion] // move to global var after QC
+    console.log("loadQuestion -> questionObject", questionObject)
     console.log("questionObject :" + questionObject);
     console.log("The right answer : "+  questionObject.answer);
     console.log("length :" + questionObject.choices.length );
@@ -89,6 +120,15 @@ function loadQuestion(indexQuestion) {
       //APPEND EVERYTHIN TO THE ANSWER BOX
       answerBox.appendChild(myP);
 
+/* radio button option
+ answers.push(
+          `<label>
+            <input type="radio" name="question${questionNumber}" value="${letter}">
+            ${letter} :
+            ${currentQuestion.answers[letter]}
+          </label>`
+          */
+
     }
   }
 
@@ -103,11 +143,8 @@ function checkAnswer (questionIndex,answerIndex){
   } else {
   confirm("You are kind of stupid.");
   };
-
   //UPDATE(Score)
   //Next Question
-
-
 };
 
 
@@ -140,15 +177,4 @@ next.addEventListener("click", function(){
   console.log("forward")
 }) ; 
 
-
-//LISTEN FOR ANSWER
-answerBox.addEventListener("click", function (event) {
-  var element = event.target;
-  if (element.matches("button") === true) {
-    var qIndex = element.getAttribute("data-parent-id");
-    var aindex = element.getAttribute("data-index");
-    //console.log("You choose " + aindex + " Q# " + qIndex);
-    checkAnswer(qIndex, aindex)
-  }
-}) ; 
 
