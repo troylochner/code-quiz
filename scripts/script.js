@@ -6,6 +6,7 @@ var timerDisplay = document.querySelector("#timerDisplay");
 var testButton = document.querySelector("#tester");
 var prevButton = document.querySelector("#prev");
 var nextButton = document.querySelector("#next");
+var startQuiz = document.querySelector("#startQuiz");
 
 
 //minified the json string for ease of reading in larger code. 
@@ -14,6 +15,43 @@ var questionBook = {"questions":[{"question":"Pick a letter - the answer is a","
 //DECLARE Q INDEX AT TOP
 var qIndex = 0;
 
+function beginQuiz(){
+ var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
+ if (toBegin === true){
+  takeQuiz(); 
+ console.log("quiz beginning");
+ } else {
+  console.log("user canceled");
+   return;
+
+ }
+
+}
+
+
+//delare a function : liveQuiz ; this function should walk through the qustion book and store the user score. 
+function takeQuiz() {
+ //set score to 0
+ var userScore = 0;
+ console.log("userScore:"+userScore);
+ //set time to 5 minutes (300000 ms)
+ var timeRemain = 300000 ; 
+ console.log("timeRemain:"+timeRemain);
+ //count the questions in the book
+ var quizLength = questionBook.questions.length;
+ console.log("quizLength:"+quizLength);
+ //set question index to 0
+ //for each question in the book
+  //ask the question // get the result
+      //if correct - go to next question
+      //go to next question + reduce the time remaining
+  //when the last question has been answered | or the timer = 0
+  //show the user the result of the quiz
+  //ask the user to store their initials
+  //save the initials + score + time to the local storage
+  //exit the script ( or reset the page)
+
+}
 
 //declare the functions needed to run this application. 
 function loadQuestion(indexQuestion) {
@@ -81,6 +119,12 @@ function goto(i){
 
 function saveHighScore(){}
 
+
+// clean up the naming. functions ids variables too similar. 
+//BEGIN QUIZ
+startQuiz.addEventListener("click", function(){
+ beginQuiz();
+});
 
 //ADDED EVENT LISTENERS
 tester.addEventListener("click", function(){
