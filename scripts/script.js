@@ -14,12 +14,13 @@ var questionBook = {"questions":[{"question":"Pick a letter - the answer is a","
 
 //DECLARE Q INDEX AT TOP
 var qIndex = 0;
+var totalQuestions = questionBook.questions.length;
 
 function beginQuiz(){
  var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
  if (toBegin === true){
-  takeQuiz(); 
- console.log("quiz beginning");
+  console.log("quiz beginning");
+    takeQuiz(); 
  } else {
   console.log("user canceled");
    return;
@@ -34,27 +35,19 @@ function beginQuiz(){
 
 
 /////////quiz logic
-//delare a function : liveQuiz ; this function should walk through the qustion book and store the user score. 
+//delare a function : liveQuiz ; this function should walk through the question book and store the user score. 
 function takeQuiz() {
-  
+  nextQuestion(qIndex);
 
+  /*
   //COME BACK TO HERE
   for ( var i = 0 ; i< questionBook.questions.length ; i++){
-    console.log('hubba'+i);
-    //LISTEN FOR ANSWER
+    //ONLY LOAD QUESTION IF AN ANSWER HAS BEEN SUBMITTED : OR IF WE ARE STARTING
+    if (answerSubmitted >0)  {
+      nextQuestion(i);
+  }};*/
 
-    answerBox.addEventListener("click", function (event) {
-  var element = event.target;
-  if (element.matches("button") === true) {
-    var qIndex = element.getAttribute("data-parent-id");
-    var aindex = element.getAttribute("data-index");
-    //console.log("You choose " + aindex + " Q# " + qIndex);
-    checkAnswer(qIndex, aindex)
-  }
-}) ; 
-
-
-  }
+  console.log("done")
   
 
   /*
@@ -78,22 +71,17 @@ function takeQuiz() {
 
 ////////////////
 
-
-
-
-
 //declare the functions needed to run this application. 
-function loadQuestion(indexQuestion) {
-    //event.preventDefault();
-    // Clear question box
+function nextQuestion(indexQuestion) {
+    //CLEAR THE BOX
     questionBox.innerHTML = "";
     questionBox.innerText=questionBook.questions[indexQuestion].question
     
     //CREATE AN OBJECT OF THE QUESTION + ANSWERS
     answerBox.innerHTML = "";
     var questionObject = questionBook.questions[indexQuestion] // move to global var after QC
-    console.log("loadQuestion -> questionObject", questionObject)
-    console.log("questionObject :" + questionObject);
+    
+    console.log("questionObject :" + JSON.stringify(questionObject));
     console.log("The right answer : "+  questionObject.answer);
     console.log("length :" + questionObject.choices.length );
     
@@ -117,17 +105,9 @@ function loadQuestion(indexQuestion) {
       button.setAttribute("data-index", i);
       myP.appendChild(button);
       
-      //APPEND EVERYTHIN TO THE ANSWER BOX
+      //Add thebuttons
       answerBox.appendChild(myP);
-
-/* radio button option
- answers.push(
-          `<label>
-            <input type="radio" name="question${questionNumber}" value="${letter}">
-            ${letter} :
-            ${currentQuestion.answers[letter]}
-          </label>`
-          */
+     //TRY RADIO BUTTON SELECTORS??
 
     }
   }
@@ -136,26 +116,34 @@ function checkAnswer (questionIndex,answerIndex){
   var theQuestion = questionBook.questions[questionIndex]
   var rightAnswer = theQuestion.answer
   var score;
-
   if (answerIndex == rightAnswer ){
-    confirm("You are smart.");
-    
+    console.log("right");
+    //ADD TO SCORE 
   } else {
-  confirm("You are kind of stupid.");
+  console.log("wrong");
+  //REDUCE FROM SCORE
+  //TIME PENALTY
   };
-  //UPDATE(Score)
-  //Next Question
+  qIndex++;
+  if (qIndex > )
+  nextQuestion(qIndex);
 };
 
-
+//UPDATE THE SCORE
 function updateScore(){}
 
-function goto(i){
-  return(qIndex + i);
-}
-
+//STORE THE HIGH SCORES
 function saveHighScore(){}
 
+//ANSWER SELECTION EVENT LISTENER
+answerBox.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button") === true) {
+    var qIndex = element.getAttribute("data-parent-id");
+    var aindex = element.getAttribute("data-index");
+    checkAnswer(qIndex, aindex);
+  }
+})
 
 // clean up the naming. functions ids variables too similar. 
 //BEGIN QUIZ
@@ -163,12 +151,14 @@ startQuiz.addEventListener("click", function(){
  beginQuiz();
 });
 
+
 //ADDED EVENT LISTENERS
 tester.addEventListener("click", function(){
-    loadQuestion(qIndex);
+    nextQuestion(qIndex);
 }) ; 
 
-//NAVIGATION
+
+//NAVIGATION - PHASE OUT ONCE WORKING
 prev.addEventListener("click", function(){
   console.log("back")
 }) ; 
