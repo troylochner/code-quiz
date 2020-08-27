@@ -19,11 +19,12 @@ var totalQuestions = questionBook.questions.length;
 var userScore = 0;
 
 
-
 function beginQuiz(){
  var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
  if (toBegin === true){
   console.log("quiz beginning");
+   startQuiz.style.display="none";
+    setTime();
     takeQuiz(); 
  } else {
   console.log("user canceled");
@@ -32,11 +33,13 @@ function beginQuiz(){
 }
 function takeQuiz() {
   if (qIndex < totalQuestions) {
-    setTime();
-    nextQuestion(qIndex);
+  nextQuestion(qIndex);
+  } else if ( secondsLeft < 0 ){
+    console.log("NO TIME LEFT")
   } else {
-    console.log("DONE")
-}};
+    console.log("COMPLETED")
+  }
+};
 
 //declare the functions needed to run this application. 
 function nextQuestion(indexQuestion) {
@@ -83,10 +86,12 @@ function checkAnswer (questionIndex,answerIndex){
   
   var score;
   if (answerIndex == rightAnswer ){
+    //IF THE ANSWER IS CORRECT - ADD A POINT
     userScore++;
     console.log("right");
     console.log(userScore);
   } else {
+    //IF WRONG - LOOSE FIVE SECONDS
     console.log("wrong");
     console.log(userScore);
   };
@@ -105,11 +110,15 @@ function setTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
     timerDisplay.textContent = secondsLeft + " second left on the quiz.";
+    
 
     if(secondsLeft === 0) {
       clearInterval(timerInterval);
       //sendMessage();
     }
+
+    //RETURN THE AMOUNT OF SECONDS LEFT
+    return(secondsLeft);
 
   }, 1000);
 }

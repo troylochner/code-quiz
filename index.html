@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Code Quiz</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="style/style.css">
-    </head>
-    <body>
-        <div class="container"></div>
-        <H1>Take the code quiz !</H1>
 
-        <!--ADDED BOOTSTRAP-->
-        
+<head>
+    <title>Code Quiz</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
 
-        <H2 id="questionBox" style="background-color: aqua" ></H2>
-        <ul id="answerBox" style="background-color: royalblue" ></ul>
-        <H3 id="resultBox" style="background-color: peru" ></H3>
-        <div id="timerDisplay" style="background-color: springgreen"></div>
+<body>
+    <div class="container-fluid">
+        <div class="row">
 
-        <button id="startQuiz">Take the Quiz !</button>
-    
-    
-    </div>
+            <div class="col-6">
+                <H1>A quick code quiz</H1>
+                <div>
+
+                    <div class="col-6">
+                        <button id="startQuiz">Take the Quiz !</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <H2 id="questionBox" style="background-color: aqua"></H2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <ul id="answerBox" style="background-color: royalblue"></ul>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <H3 id="resultBox" style="background-color: peru"></H3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div id="timerDisplay" style="background-color: springgreen"></div>
+                    </div>
+                </div>
 
 
-        <script src="scripts/script.js"></script>
-    </body>
+
+            </div>
+
+            <script src="scripts/script.js"></script>
+</body>
+
 </html>
