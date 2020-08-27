@@ -7,14 +7,18 @@ var testButton = document.querySelector("#tester");
 var prevButton = document.querySelector("#prev");
 var nextButton = document.querySelector("#next");
 var startQuiz = document.querySelector("#startQuiz");
-
+var timerDisplay = document.querySelector("#timerDisplay");
 
 //minified the json string for ease of reading in larger code. 
 var questionBook = {"questions":[{"question":"Pick a letter - the answer is a","answer":0,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is b","answer":1,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is c","answer":2,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]},{"question":"Pick a letter - the answer is d","answer":3,"choices":[{"heading":"a","answer":"The letter A"},{"heading":"b","answer":"The letter B"},{"heading":"c","answer":"The letter C"},{"heading":"d","answer":"The letter D"}]}]};
 
-//DECLARE Q INDEX AT TOP
+//declare some things to our user right off the bat. 
+var secondsLeft = 20;
 var qIndex = 0;
 var totalQuestions = questionBook.questions.length;
+var userScore = 0;
+
+
 
 function beginQuiz(){
  var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
@@ -26,50 +30,13 @@ function beginQuiz(){
    return;
  }
 }
-//start the game   //start()
-//hide the start button 
-//set next question
-//shuffle? fn
-//set the next question
-//select answer
-
-
-/////////quiz logic
-//delare a function : liveQuiz ; this function should walk through the question book and store the user score. 
 function takeQuiz() {
-  nextQuestion(qIndex);
-
-  /*
-  //COME BACK TO HERE
-  for ( var i = 0 ; i< questionBook.questions.length ; i++){
-    //ONLY LOAD QUESTION IF AN ANSWER HAS BEEN SUBMITTED : OR IF WE ARE STARTING
-    if (answerSubmitted >0)  {
-      nextQuestion(i);
-  }};*/
-
-  console.log("done")
-  
-
-  /*
- //set score to 0
- var userScore = 0;
- console.log("takeQuiz -> userScore", userScore)
- console.log("userScore:"+userScore);
- //set time to 5 minutes (300000 ms)
- var timeRemain = 300000 ; 
- console.log("timeRemain:"+timeRemain);
- //count the questions in the book
- var quizLength = questionBook.questions.length;
- console.log("quizLength:"+quizLength);
- //set question index to 0
- var indexQuestion = 0
- console.log("takeQuiz -> indexQuestion", indexQuestion)
- //for each question in the book  */
-
-
-}
-
-////////////////
+  if (qIndex < totalQuestions) {
+    setTime();
+    nextQuestion(qIndex);
+  } else {
+    console.log("DONE")
+}};
 
 //declare the functions needed to run this application. 
 function nextQuestion(indexQuestion) {
@@ -80,11 +47,7 @@ function nextQuestion(indexQuestion) {
     //CREATE AN OBJECT OF THE QUESTION + ANSWERS
     answerBox.innerHTML = "";
     var questionObject = questionBook.questions[indexQuestion] // move to global var after QC
-    
-    console.log("questionObject :" + JSON.stringify(questionObject));
-    console.log("The right answer : "+  questionObject.answer);
-    console.log("length :" + questionObject.choices.length );
-    
+
 // Render a new line for each choice
     for (var i = 0; i < questionObject.choices.length; i++) {
       var theQuestion = JSON.stringify(questionObject.choices[i]) ; 
@@ -95,7 +58,7 @@ function nextQuestion(indexQuestion) {
       myP.setAttribute("data-index", i);
       myP.setAttribute("data-parent-id",indexQuestion)
       myP.setAttribute("id","theChoices")
-      console.log(theQuestion) ;     
+      //console.log(theQuestion) ;     
 
       //CREATE AND APPEND THE BUTTON
       var button = document.createElement("button");
@@ -112,30 +75,46 @@ function nextQuestion(indexQuestion) {
     }
   }
 
+  //CHECK OUT ANSWER
 function checkAnswer (questionIndex,answerIndex){
   var theQuestion = questionBook.questions[questionIndex]
   var rightAnswer = theQuestion.answer
+  
+  
   var score;
   if (answerIndex == rightAnswer ){
+    userScore++;
     console.log("right");
-    //ADD TO SCORE 
+    console.log(userScore);
   } else {
-  console.log("wrong");
-  //REDUCE FROM SCORE
-  //TIME PENALTY
+    console.log("wrong");
+    console.log(userScore);
   };
+
   qIndex++;
   if (qIndex <  totalQuestions )
   nextQuestion(qIndex);
 };
 
-//UPDATE THE SCORE
-function updateScore(){}
 
 //STORE THE HIGH SCORES
 function saveHighScore(){}
 
-//ANSWER SELECTION EVENT LISTENER
+//ADDING THE TIMER
+function setTime() {
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timerDisplay.textContent = secondsLeft + " second left on the quiz.";
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      //sendMessage();
+    }
+
+  }, 1000);
+}
+
+//EVENT LISTENER - SELECT ANSWER
 answerBox.addEventListener("click", function (event) {
   var element = event.target;
   if (element.matches("button") === true) {
@@ -145,14 +124,16 @@ answerBox.addEventListener("click", function (event) {
   }
 })
 
-// clean up the naming. functions ids variables too similar. 
-//BEGIN QUIZ
+//EVENT LISTENER - BEGIN QUIZ
 startQuiz.addEventListener("click", function(){
  beginQuiz();
 });
 
-
-//ADDED EVENT LISTENERS
+/*
+//EVENT LISTENER - TEST
 tester.addEventListener("click", function(){
     nextQuestion(qIndex);
-}) ; 
+}) ; */
+
+
+
