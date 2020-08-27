@@ -125,7 +125,7 @@ function checkAnswer (questionIndex,answerIndex){
   //TIME PENALTY
   };
   qIndex++;
-  if (qIndex > )
+  if (qIndex <  totalQuestions )
   nextQuestion(qIndex);
 };
 
@@ -156,15 +156,3 @@ startQuiz.addEventListener("click", function(){
 tester.addEventListener("click", function(){
     nextQuestion(qIndex);
 }) ; 
-
-
-//NAVIGATION - PHASE OUT ONCE WORKING
-prev.addEventListener("click", function(){
-  console.log("back")
-}) ; 
-
-next.addEventListener("click", function(){
-  console.log("forward")
-}) ; 
-
-
