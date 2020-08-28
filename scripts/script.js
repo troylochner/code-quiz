@@ -22,7 +22,7 @@ var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:
 
   //DETERMINE THE LENGTH OF THE QUIZ
   var secondsLeft = 15;
-  timerDisplay.textContent = "The quiz is " + questionBook.questions.length + " questions long. You will have " + secondsLeft + " seconds to complete this quiz."
+  //timerDisplay.textContent = "The quiz is " + questionBook.questions.length + " questions long. You will have " + secondsLeft + " seconds to complete this quiz."
  
 //BEGIN QUIZ
 function beginQuiz() {
@@ -72,6 +72,7 @@ function renderQuestion(indexQuestion) {
 function checkAnswer(questionIndex, answerIndex) {
   var theQuestion = questionBook.questions[questionIndex];
   var rightAnswer = theQuestion.answer
+  resultBox.style.display="block";
   
   //IF THE ANSWER IS CORRECT 
   if (answerIndex == rightAnswer) {
@@ -168,9 +169,11 @@ function resetState() {}
 
 //END THE GAME
 function endGame(){
-  //saveScore.style.display("block");
+  saveScore.style.display="block";
+  startQuiz.style.display="block";
+  resultBox.style.display="hide";
   confirm("The game is over");
-  init();
+    init();
 }
 //EVENT LISTENER - TEST
 //test.addEventListener("click", function (){})
