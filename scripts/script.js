@@ -30,6 +30,7 @@ function beginQuiz() {
   //SHOW THE BOXES WHEN WE BEGIN
   answerBox.style.display="block";
   questionBox.style.display="block";
+  startQuiz.style.display="none";
   //startTimer();
   //RENDER THE FIRST QUESTION
   renderQuestion(qIndex);
@@ -54,10 +55,16 @@ function renderQuestion(indexQuestion) {
     //OPTING TO PUT FULL ANSWERS ON THE BUTTON ELEMENT
     var button = document.createElement("button");
     button.textContent = questionObject.choices[i].answer;
-    button.setAttribute("class","btn btn-primary btn-block");
+    button.setAttribute("class","gbtn btn-primary btn-block");
+    button.setAttribute("style","height: 60px;  border-radius: 25px;")
+    //glyphicon glyphicon-ok
     button.setAttribute("data-parent-id", indexQuestion)
     button.setAttribute("data-index", i);
 
+    //var icon = document.createElement("i");
+    //icon.setAttribute("class","fa fa-dot-circle-o")
+    
+    //p.appendChild(icon);
     p.appendChild(button);
     answerBox.appendChild(p);
   }
@@ -71,6 +78,7 @@ function checkAnswer(questionIndex, answerIndex) {
   //IF THE ANSWER IS CORRECT 
   if (answerIndex == rightAnswer) {
     //SHOW THE USER SOME FEEDBACK
+    resultBox.setAttribute("class","alert alert-success");
     resultBox.textContent = "YOU ARE SO SMART...MOVING ON";
     
     //INCREASE THE USER SCORE + SET TO GO TO THE NEXT QUESTION
@@ -96,6 +104,7 @@ function checkAnswer(questionIndex, answerIndex) {
     //IF THE ANSWER WAS WRONG - LET THE USER KNOW // HIDE THEIR MISS?
     userMiss++;
     console.log("checkAnswer -> userMiss", userMiss)
+    resultBox.setAttribute("class","alert alert-danger");
     resultBox.textContent = "YOU ARE SO WRONG";
   };
 }
