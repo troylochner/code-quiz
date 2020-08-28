@@ -36,7 +36,6 @@ function beginQuiz() {
   renderQuestion(qIndex);
 }
 
-
 //RENDER THE QUESTION ON THE SCREEN
 function renderQuestion(indexQuestion) {
   questionBox.innerHTML = "";
@@ -115,12 +114,21 @@ function checkAnswer(questionIndex, answerIndex) {
 
 
 //STORE THE USER SCORE
-function saveHighScore() {
-  var saveScore = confirm("Your score is was : " + secondsLeft + " would you like to save this score?")
-  if (saveScore===true){
-    //ADD THE SCORE
-  };
+function saveHighScore(name,userScore) {
+var scoreArray= [name,userScore,Date.now()]
+localStorage.setItem("highScores",JSON.stringify(scoreArray))
+console.log("saveHighScore -> saveHighScore", scoreArray)
+saveScore.style.display="hide";
+showHighScores();
 }
+
+
+//show HIGH SCORES
+function showHighScores(){
+ confirm(localStorage.getItem('highScores'));
+
+}
+
 
 
 //EVENT LISTENER - SELECT ANSWER
@@ -142,6 +150,14 @@ startQuiz.addEventListener("click", function () {
   }
 })
 
+//EVENT LISTENER - BEGIN QUIZ
+saveScore.addEventListener("click", function () {
+  var name = prompt("Enter your name to save high score.");
+  console.log("name", name);
+  console.log("score", userScore);
+  saveHighScore(name,userScore);
+})
+
 //RESET / INITIALIZE GAME AGAIN
 function init() {
   var totalQuestions = questionBook.questions.length;
@@ -155,12 +171,10 @@ function init() {
 }
 
 function resetState() {}
-function renderHighScores(){}
-
 function endGame(){
   confirm("The game is over");
   init();
 }
 
 //EVENT LISTENER - TEST
-test.addEventListener("click", function (){})
+//test.addEventListener("click", function (){})
