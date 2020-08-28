@@ -48,24 +48,18 @@ function renderQuestion(indexQuestion) {
   // Render a new line for each choice
   for (var i = 0; i < questionObject.choices.length; i++) {
     var theQuestion = JSON.stringify(questionObject.choices[i]);
+    
+    var p = document.createElement("p");
 
-    //CREATE AND APPEND OUR CHOICE
-    var myP = document.createElement("p"); // or child element
-    myP.textContent = questionObject.choices[i].heading + " | " + questionObject.choices[i].answer;;
-    myP.setAttribute("data-index", i);
-    myP.setAttribute("data-parent-id", indexQuestion)
-    myP.setAttribute("id", "theChoices")
-
-    //CREATE AND APPEND THE BUTTON --- CAN CONDENSE THIS
+    //OPTING TO PUT FULL ANSWERS ON THE BUTTON ELEMENT
     var button = document.createElement("button");
-    button.textContent = "|SELECT|";
-    button.setAttribute("style", "background-color: red;");
+    button.textContent = questionObject.choices[i].answer;
+    button.setAttribute("class","btn btn-primary btn-block");
     button.setAttribute("data-parent-id", indexQuestion)
     button.setAttribute("data-index", i);
-    myP.appendChild(button);
 
-    //ADD BUTTON TO THE PAGE //CONSIDER TRYING RADIO BUTTON SELECTION
-    answerBox.appendChild(myP);
+    p.appendChild(button);
+    answerBox.appendChild(p);
   }
 }
   
