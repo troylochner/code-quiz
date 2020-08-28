@@ -7,6 +7,7 @@ var testButton = document.querySelector("#tester");
 var prevButton = document.querySelector("#prev");
 var nextButton = document.querySelector("#next");
 var startQuiz = document.querySelector("#startQuiz");
+var saveScore = document.querySelector("#saveScore");
 var timerDisplay = document.querySelector("#timerDisplay");
 var test = document.querySelector("#test");
 
@@ -14,7 +15,6 @@ var test = document.querySelector("#test");
 var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
 
   //var totalQuestions = questionBook.questions.length;
-  
   // START AT USER SCORE AND QUESTION NUMBER
   var userScore = 0;
   var userMiss = 0;
@@ -23,7 +23,6 @@ var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:
   //DETERMINE THE LENGTH OF THE QUIZ
   var secondsLeft = 15;
   timerDisplay.textContent = "The quiz is " + questionBook.questions.length + " questions long. You will have " + secondsLeft + " seconds to complete this quiz."
-
  
 //BEGIN QUIZ
 function beginQuiz() {
@@ -36,7 +35,7 @@ function beginQuiz() {
   renderQuestion(qIndex);
 }
 
-//RENDER THE QUESTION ON THE SCREEN
+//RENDER QUESTION ON SCREEN
 function renderQuestion(indexQuestion) {
   questionBox.innerHTML = "";
   questionBox.innerText = questionBook.questions[indexQuestion].question
@@ -112,7 +111,6 @@ function checkAnswer(questionIndex, answerIndex) {
   };
 }
 
-
 //STORE THE USER SCORE
 function saveHighScore(name,userScore) {
 var scoreArray= [name,userScore,Date.now()]
@@ -122,14 +120,11 @@ saveScore.style.display="hide";
 showHighScores();
 }
 
-
-//show HIGH SCORES
+//SHOW ALL HIGH SCORES
 function showHighScores(){
  confirm(localStorage.getItem('highScores'));
 
 }
-
-
 
 //EVENT LISTENER - SELECT ANSWER
 answerBox.addEventListener("click", function (event) {
@@ -158,7 +153,7 @@ saveScore.addEventListener("click", function () {
   saveHighScore(name,userScore);
 })
 
-//RESET / INITIALIZE GAME AGAIN
+//RESET THE WINDOW
 function init() {
   var totalQuestions = questionBook.questions.length;
   var userScore = 0;
@@ -169,12 +164,13 @@ function init() {
   answerBox.style.display="none";
   questionBox.style.display="none";
 }
-
 function resetState() {}
+
+//END THE GAME
 function endGame(){
+  //saveScore.style.display("block");
   confirm("The game is over");
   init();
 }
-
 //EVENT LISTENER - TEST
 //test.addEventListener("click", function (){})
