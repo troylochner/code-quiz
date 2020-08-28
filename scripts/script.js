@@ -101,9 +101,13 @@ function checkAnswer(questionIndex, answerIndex) {
     }
 
   } else {
-    //IF THE ANSWER WAS WRONG - LET THE USER KNOW // HIDE THEIR MISS?
+    //IF THE ANSWER WAS WRONG - LET THE USER KNOW // HIDE MISSES?
     userMiss++;
-    console.log("checkAnswer -> userMiss", userMiss)
+    console.log("checkAnswer -> userMiss", userMiss);
+    //this.element.find('#answerbox').children().eq(answerIndex).remove();
+    //answerBox.removeChild(answerBox[answerIndex]);
+    //list.removeChild(list.childNodes[0]);
+
     resultBox.setAttribute("class","alert alert-danger");
     resultBox.textContent = "YOU ARE SO WRONG";
   };
