@@ -2,6 +2,7 @@
 var questionBox = document.querySelector("#questionBox");
 var answerBox = document.querySelector("#answerBox");
 var resultBox = document.querySelector("#resultBox");
+
 //var testButton = document.querySelector("#tester");
 var startQuiz = document.querySelector("#startQuiz");
 var saveScore = document.querySelector("#saveScore");
@@ -16,28 +17,58 @@ var workMinutesInput = document.querySelector("#work-minutes");
 var inputs = document.querySelector(".inputs")
 
 //GLOBAL VARIABLES
-var totalSeconds=0;
-var secondsElapsed=0 ;
+var totalSeconds;
+var secondsElapsed ;
 var interval;
 var userScore;
 var userMiss;
-var qIndex = 0;
+var qIndex;
 
-
+init();
 //minified the json string for ease of reading in larger code. 
 var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
-
-
-
  
+
+//INIT - RESET THE WINDOW
+function init() {
+    totalSeconds=0;
+    secondsElapsed=0 ;
+    interval;
+    userScore=0;
+    userMiss=0;
+    qIndex = 0;
+    //var totalQuestions = questionBook.questions.length;
+
+    //CLEAR ASPECTS OF THE WINDOW
+    questionBox.style.display="none";
+    answerBox.style.display="none";
+    saveScore.style.display="none";
+}
+
+//EVENT - BEGIN QUIZ
+startQuiz.addEventListener("click", function () {
+  var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
+  if (toBegin === true) {
+    beginQuiz();
+  }
+})
+
 //BEGIN QUIZ
 function beginQuiz() {
   //SHOW THE BOXES WHEN WE BEGIN
-  answerBox.style.display="block";
   questionBox.style.display="block";
+  answerBox.style.display="block";
+  resultBox.style.display="block";
+
+  //HIDE OPTION TO START + SHOW HIGH SCORES
   startQuiz.style.display="none";
+  viewHighScores.style.display="none";
+  saveScore.style.display="none";
+
+  //START THE CLOCK
   startTimer();
-  //RENDER THE FIRST QUESTION
+  
+  //BEGIN THE QUESTIONING
   renderQuestion(qIndex);
 }
 
@@ -48,12 +79,12 @@ function renderQuestion(indexQuestion) {
 
   //CREATE AN OBJECT OF THE QUESTION + ANSWERS
   answerBox.innerHTML = "";
-  var questionObject = questionBook.questions[indexQuestion] // move to global var after QC
+  var questionObject = questionBook.questions[indexQuestion]
 
   // Render a new line for each choice
   for (var i = 0; i < questionObject.choices.length; i++) {
     var theQuestion = JSON.stringify(questionObject.choices[i]);
-    
+  
     var p = document.createElement("p");
 
     //OPTING TO PUT FULL ANSWERS ON THE BUTTON ELEMENT
@@ -61,16 +92,11 @@ function renderQuestion(indexQuestion) {
     button.textContent = questionObject.choices[i].answer;
     button.setAttribute("class","gbtn btn-primary btn-block");
     button.setAttribute("style","height: 60px;  border-radius: 25px;")
-    //glyphicon glyphicon-ok
     button.setAttribute("data-parent-id", indexQuestion)
     button.setAttribute("data-index", i);
-
-    //var icon = document.createElement("i");
-    //icon.setAttribute("class","fa fa-dot-circle-o")
-    
-    //p.appendChild(icon);
     p.appendChild(button);
     answerBox.appendChild(p);
+
   }
 }
   
@@ -83,7 +109,7 @@ function checkAnswer(questionIndex, answerIndex) {
   //IF THE ANSWER IS CORRECT 
   if (answerIndex == rightAnswer) {
     //SHOW THE USER SOME FEEDBACK
-    
+
     resultBox.setAttribute("class","alert alert-success");
     resultBox.textContent = "correct, moving on...";
     
@@ -120,14 +146,11 @@ function checkAnswer(questionIndex, answerIndex) {
   };
 }
 
-
 //STORE THE USER SCORE
 function saveHighScore() {
 var scoreArray= [name,userScore,Date.now()]
 localStorage.setItem("highScores",JSON.stringify(scoreArray))
-console.log("saveHighScore -> saveHighScore", scoreArray)
-saveScore.style.display="hide";
-showHighScores();
+init();
 
 /*
 //HACKED HIGH SCORES
@@ -170,20 +193,13 @@ answerBox.addEventListener("click", function (event) {
   }
 })
 
+//EVENT - SHOW LAST HIGH SCORE
 viewHighScores.addEventListener("click",function(){
 showHighScores();
 })
 
 
-//EVENT LISTENER - BEGIN QUIZ
-startQuiz.addEventListener("click", function () {
-  var toBegin = confirm("Begin the quiz? \n The timer will begin upon clicking 'Ok'");
-  if (toBegin === true) {
-    beginQuiz();
-  }
-})
-
-//EVENT LISTENER - BEGIN QUIZ
+//EVENT - SAVE SCORE
 saveScore.addEventListener("click", function () {
   var name = prompt("Enter your name to save high score.");
   console.log("name", name);
@@ -191,36 +207,29 @@ saveScore.addEventListener("click", function () {
   saveHighScore(name,userScore);
 })
 
-//RESET THE WINDOW
-function init() {
-  var totalQuestions = questionBook.questions.length;
-  var userScore = 0;
-  var userMiss = 0
-  var qIndex = 0;
-  var secondsLeft = 15;
-  answerBox.style.display="none";
-  questionBox.style.display="none";
-}
-function resetState() {}
-
 //END THE GAME
 function endGame(){
+  //HIDE THE IN QUIZ ELEMENTS
+  resultBox.style.display="none";
+  answerBox.style.display="none";
+  questionBox.style.display="none";
+
+  //SHOW OUR WAITING ELEMENTS
   saveScore.style.display="block";
   startQuiz.style.display="block";
-  resultBox.style.display="hide";
+  viewHighScores.style.display="block";
+
   stopTimer();
   confirm("The game is over");
-    init();
+  //init();
 }
-//EVENT LISTENER - TEST
-//test.addEventListener("click", function (){})
 
-// hacked together scripts based on pomodoro timer
+//TIMER FUNCTIONS - HACKED TOGETHER USING CLASS ACTIVITY OF POMODORO TIMER
 
-// This launches the app by calling setTime() and renderTime()
+//GET TIME PREFS
 getTimePreferences();
 
-// These two functions are just for making sure the numbers look nice for the html elements
+//FORMAT MINUTES
 function getFormattedMinutes() {
   //
   var secondsLeft = totalSeconds - secondsElapsed;
@@ -238,25 +247,21 @@ function getFormattedMinutes() {
   return formattedMinutes;
 }
 
+//FORMAT SECONDS
 function getFormattedSeconds() {
   var secondsLeft = (totalSeconds - secondsElapsed) % 60;
-
   var formattedSeconds;
-  //console.log("getFormattedSeconds -> formattedSeconds", formattedSeconds)
-
+  
+  //CONSIDER SOMETHING FUN LIKE A BLINK OR RED IF < 10
   if (secondsLeft < 10) {
     formattedSeconds = "0" + secondsLeft;
   } else {
     formattedSeconds = secondsLeft;
   }
-
   return formattedSeconds;
 }
 
-/* This function retrieves the values from the html input elements; Sort of
-   getting run in the background, it sets the totalSeconds variable which
-   is used in getFormattedMinutes/Seconds() and the renderTime() function.
-   It essentially resets our timer */
+//SET THE TIME REMAINING
 function setTime() {
   var minutes = workMinutesInput.value.trim();
   console.log("setTime -> minutes", minutes)
@@ -264,77 +269,38 @@ function setTime() {
   totalSeconds = minutes * 60;
 }
 
-
 //DISPLAY THE TIME REMAINING / IF TIME IS OUT - EXIT THE GAME
 function renderTime() {
-  // When renderTime is called it sets the textContent for the timer html...
   minutesDisplay.textContent = getFormattedMinutes();
   secondsDisplay.textContent = getFormattedSeconds();
-  //console.log("renderTime -> secondsDisplay.textContent", secondsDisplay.textContent)
-
  // IF THE TIME IS OUT - END THE GAME
   if (secondsElapsed >= totalSeconds) {
     endGame();
-
   }
 }
-// This function is where the "time" aspect of the timer runs
-// Notice no settings are changed other than to increment the secondsElapsed var
+//BEGIN THE TIMER
 function startTimer() {
   setTime();
-
-  // We only want to start the timer if totalSeconds is > 0
+  // ONLY START THE TIME IF > 0
   if (totalSeconds > 0) {
-    /* The "interval" variable here using "setInterval()" begins the recurring increment of the
-       secondsElapsed variable which is used to check if the time is up */
+    //INTERVAL BEGINS OUR RECURRING EVENT OF ADDING A SECOND ELAPSED AND RENDERING THE TIME REMAINING ON SCREEN
       interval = setInterval(function() {
         secondsElapsed++;
-
-        // So renderTime() is called here once every second.
         renderTime();
       }, 1000);
-  } else {
-    alert("Minutes of work/rest must be greater than 0.")
   }
 }
 
-/* This function stops the setInterval() set in startTimer but does not
-   reset the secondsElapsed variable and does not reset the time by calling "setTime()" */
-function pauseTimer() {
-  clearInterval(interval);
-  renderTime();
-}
-
-/* This function stops the interval and also resets secondsElapsed
-   and calls "setTime()" which effectively reset the timer
-   to the input selections workMinutesInput.value and restMinutesInput.value */
+//STOP THE TIMER
 function stopTimer() {
   secondsElapsed = 0;
   setTime();
   renderTime();
 }
 
-/* Our timer is fancy enough to handle 2 different settings at once this toggle
-   function basically just specifies which of our 2 timer settings to use. */
-function toggleStatus(event) {
-  var checked = event.target.checked;
-
-  if (checked) {
-    status = "Working";
-  } else {
-    status = "Resting";
-  }
-
-  statusSpan.textContent = status;
-
-  secondsElapsed = 0;
-  setTime();
-  renderTime();
-}
-
+//GET THE TIMER SETTINGS
 function getTimePreferences() {
-  /* Here we check to see if any preferences have
-     been set in the local storage via "setTimePreferences()" */
+  //SEE IF THIS HAS BEEN STORED LOCALLY
   var preferences = JSON.parse(localStorage.getItem("preferences"));
 
   // If preferences have been set then use any value available
@@ -343,27 +309,18 @@ function getTimePreferences() {
       workMinutesInput.value = preferences.workMinutes;
     }
   }
-
-  // This is where the app is really kicked-off, setTime and renderTime are the two main routines.
+  //USING THE FOUND PREFS - SET THE TIME AND RENDER THE TIME ON SCREEN
   setTime();
   renderTime();
 } 
 
+//SET TIMER PREFERENCES
 function setTimePreferences() {
-  localStorage.setItem(
-    "preferences",
-    JSON.stringify({
-      workMinutes: workMinutesInput.value.trim(),
-      //restMinutes: restMinutesInput.value.trim()
-    })
+  localStorage.setItem("preferences",
+    JSON.stringify({workMinutes: workMinutesInput.value.trim()})
   );
 }
 
-//playButton.addEventListener("click", startTimer);
-//pauseButton.addEventListener("click", pauseTimer);
-//stopButton.addEventListener("click", stopTimer);
-//statusToggle.addEventListener("change", toggleStatus);
+//EVENT  - TIMER SETTING UPDATE ON CHANGES / CLICKER SELECTS
 inputs.addEventListener("change", setTimePreferences);
 inputs.addEventListener("keyup", setTimePreferences);
-
-
