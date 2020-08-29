@@ -24,10 +24,37 @@ var interval;
 var userScore;
 var userMiss;
 var qIndex;
+var currentHighScore ; 
 
 init();
-//minified the json string for ease of reading in larger code. 
-var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
+//minified the json string for ease of reading in larger code.
+//QUICK MAKER : http://www.objgen.com/json
+//MINIFIER : https://codebeautify.org/jsonminifier
+//FORMAT TO REPLICATE : 
+
+/*
+questions[0]
+  question = QUESTION 1
+  answer = 1
+  choices[0]
+    heading=a
+    answer=[CHOICE A]
+  choices[1]
+    heading=b
+    answer=[CHOICE B]
+  choices[2]
+    heading=c
+    answer=[CHOICE C]
+  choices[3]
+    heading=d
+    answer=[CHOICE D]
+*/
+
+//WORKING TEMPLATE - ALL B IS CORRECT
+var questionBook = {"questions":[{"question":"Inside which HTML element do we put the JavaScript?","answer":"0","choices":[{"heading":"a","answer":"<script>"},{"heading":"b","answer":"<scripting>"},{"heading":"c","answer":"<java>"},{"heading":"d","answer":"<js>"}]},{"question":"Where is the correct place to insert a JavaScript?","answer":"2","choices":[{"heading":"a","answer":"The <head> section"},{"heading":"b","answer":"The <body> section"},{"heading":"c","answer":"Both the <head> and <body> will work."},{"heading":"d","answer":"The <footer> section"}]},{"question":"What is the correct syntax for referring to an external script called 'scriptname.js'?","answer":"0","choices":[{"heading":"a","answer":"<script src='scriptname.js'>"},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"wrong choices here."},{"heading":"d","answer":"wrong choices here."}]},{"question":"JavaScript is the same as Java.","answer":"1","choices":[{"heading":"a","answer":"true"},{"heading":"b","answer":"false"}]},{"question":"How do you write 'Hello Wolrd in the alert box?","answer":"2","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"alert('Hello World');"},{"heading":"d","answer":"wrong choices here."}]},{"question":"How do you call a function named 'myFunction'?","answer":"2","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"myFunction()"},{"heading":"d","answer":"wrong choices here."}]},{"question":"How to write an IF statement in JavaScript?","answer":"1","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"if (i==5)"},{"heading":"c","answer":"wrong choices here."},{"heading":"d","answer":"wrong choices here."}]},{"question":"How do you declare a JavaScript variable?","answer":"0","choices":[{"heading":"a","answer":"var x=1"},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"wrong choices here."},{"heading":"d","answer":"wrong choices here."}]},{"question":"How does a FOR loop start?","answer":"2","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"for (i=0;i<5;i++)"},{"heading":"d","answer":"wrong choices here."}]},{"question":"How can you add a comment in a JavaScript?","answer":"3","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"wrong choices here"},{"heading":"d","answer":"//my comment would go here"}]}]}
+//var questionBook = {"questions":[{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]}]}
+
+//var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
  
 
 //INIT - RESET THE WINDOW
@@ -38,6 +65,8 @@ function init() {
     userScore=0;
     userMiss=0;
     qIndex = 0;
+
+    currentHighScore = localStorage.getItem('highScores')
     //var totalQuestions = questionBook.questions.length;
 
     //CLEAR ASPECTS OF THE WINDOW
@@ -79,7 +108,7 @@ function beginQuiz() {
 //RENDER QUESTION ON SCREEN
 function renderQuestion(indexQuestion) {
   questionBox.innerHTML = "";
-  questionBox.innerText = questionBook.questions[indexQuestion].question
+  questionBox.innerText = 'Question #'+ (indexQuestion+1) + ' : ' + questionBook.questions[indexQuestion].question
 
   //CREATE AN OBJECT OF THE QUESTION + ANSWERS
   answerBox.innerHTML = "";
@@ -93,7 +122,7 @@ function renderQuestion(indexQuestion) {
 
     //OPTING TO PUT FULL ANSWERS ON THE BUTTON ELEMENT
     var button = document.createElement("button");
-    button.textContent = questionObject.choices[i].answer;
+    button.textContent = questionObject.choices[i].heading + '. ' + questionObject.choices[i].answer;
     button.setAttribute("class","gbtn btn-primary btn-block");
     button.setAttribute("style","height: 60px;  border-radius: 25px;")
     button.setAttribute("data-parent-id", indexQuestion)
@@ -107,7 +136,8 @@ function renderQuestion(indexQuestion) {
 //CHECK ANSWER
 function checkAnswer(questionIndex, answerIndex) {
   var theQuestion = questionBook.questions[questionIndex];
-  var rightAnswer = theQuestion.answer
+  var rightAnswer = theQuestion.answer;
+  var quizLength = questionBook.questions.length;
   resultBox.style.display="block";
   
   //IF THE ANSWER IS CORRECT 
@@ -124,15 +154,15 @@ function checkAnswer(questionIndex, answerIndex) {
     console.log("checkAnswer -> questionIndex",questionBook.questions.length)
     
     //IF ALL QUESTIONS ARE ANSWERED --> GO TO ENDGAME FUNCTION
-    if (questionIndex > 3 ){ //THIS WORKS WHEN HARD CODED IN. 
+    if (questionIndex  === quizLength ){ 
       console.log("The quiz has been completed.");
+      console.log(( totalSeconds-secondsElapsed)* 1000);
+      
       endGame();
       return;
       
     //IF MORE QUESTIONS EXIST - GO TO THE NEXT QUESTION
     } else {
-    //console.log("Correct answer go to next question. checkAnswer -> questionIndex", questionIndex);
-    //console.log("seconds remaining : "+ secondsLeft)
     renderQuestion(questionIndex);
     }
 
@@ -142,39 +172,16 @@ function checkAnswer(questionIndex, answerIndex) {
     // IF THE USER IS WRONG + ADD FIVE SECONDS TO THE TIME ELAPSED
     secondsElapsed += 5; 
     renderTime();
-    //console.log("checkAnswer -> secondsElapsed", secondsElapsed)
-    //console.log("checkAnswer -> userMiss", userMiss);   
-    
     resultBox.setAttribute("class","alert alert-danger");
-    resultBox.textContent = "you choose poorly...try again.";
+    resultBox.textContent = "incorrect...please try again.";
   };
 }
 
 //STORE THE USER SCORE
 function saveHighScore() {
-var scoreArray= [name,userScore,Date.now()]
+var scoreArray= [name,userScore,Date.now()];
 localStorage.setItem("highScores",JSON.stringify(scoreArray))
-init();
-
-/*
-//HACKED HIGH SCORES
-saveHighScore = (e) => {
-  e.preventDefault();
-
-  const score = {
-      score: mostRecentScore,
-      name: username.value,
-  };
-  highScores.push(score);
-  highScores.sort((a, b) => b.score - a.score);
-  highScores.splice(5);
-
-  localStorage.setItem('highScores', JSON.stringify(highScores));
-  window.location.assign('/');
-};
-
-*/
-
+init(); //INIT WILL BLOW OUT THE PREVIOUS SCORE
 }
 
 //SHOW ALL HIGH SCORES
@@ -199,7 +206,6 @@ viewHighScores.addEventListener("click",function(){
 showHighScores();
 })
 
-
 //EVENT - SAVE SCORE
 saveScore.addEventListener("click", function () {
   var name = prompt("Enter your name to save high score.");
@@ -220,6 +226,8 @@ function endGame(){
   saveScore.style.display="block";
   startQuiz.style.display="block";
   viewHighScores.style.display="block";
+
+  userScore = ((totalSeconds-secondsElapsed) * 1000 )
 
   stopTimer();
   confirm("The game is over");
