@@ -10,78 +10,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://use.fontawesome.com/56ac5753f6.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
-    
+
     <nav class="navbar navbar-dark bg-dark">
+
         <span class="navbar-brand mb-0 h1">Code Quiz</span>
-        <div><button id="timerDisplay">TIMER DISPLAY</button> </div>
 
-
-        <div class="time">
-            <div id="minutes">25</div>
-            <div id="seconds">00</div>
-          </div>
-
-        <div class="input-group">
+        <form class="form-inline">
             <label for="work-minutes">Minutes to complete</label>
             <input type="number" name="work" id="work-minutes" value="5" />
-          </div>
+            <div class="time">
+                <div id="minutes">25</div>
+                <div id="seconds">00</div>
+            </div>
+        </form>
 
+        <div>
+            <button class="btn btn-primary btn-block" id="showHighScores">Show High Scores</button>
+        </div>
 
-        <div><button class="btn btn-primary btn-block" id="showHighScores">Show High Scores</button></div>
-        <div><button class="btn btn-danger btn-block" id="startQuiz">Start Quiz!</button></div>
+        <div>
+            <button class="btn btn-danger btn-block" id="startQuiz">Start Quiz!</button>
+        </div>
+
     </nav>
 
     <div class="jumbotron jumbotron-fluid">
 
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8"><button class ="btn btn-secondary btn-block" id="saveScore" style="display:none">Save high score</button></div>  
+            <div class="col-8"><button class="btn btn-secondary btn-block" id="saveScore" style="display:none">Save high
+                    score</button></div>
             <div class="col-2"></div>
         </div>
 
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8"><H2 id="questionBox"></H2></div>  
+            <div class="col-8">
+                <H2 id="questionBox"></H2>
+            </div>
             <div class="col-2"></div>
         </div>
 
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8"><ul id="answerBox"></ul></div>  
+            <div class="col-8">
+                <ul id="answerBox"></ul>
+            </div>
             <div class="col-2"></div>
         </div>
 
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8"><H3 id="resultBox"></H3></div>  
+            <div class="col-8">
+                <H3 id="resultBox"></H3>
+            </div>
             <div class="col-2"></div>
         </div>
 
         <div class="row">
             <div class="col-1"></div>
-            <div class="col-10"><H2 id="timerDisplay"></H2></div>
+            <div class="col-10">
+                <H2 id="timerDisplay"></H2>
+            </div>
             <div class="col-1"></div>
-        </div>  
+        </div>
     </div>
 
 
     <div class="container">
         <div class="timer">
-          <div id="hand"></div>
-          <div class="controls">
-            
-            
-          </div>
+            <div id="hand"></div>
+            <div class="controls">
+
+
+            </div>
         </div>
-        
+
         <div class="inputs">
-       
+
         </div>
-      </div>
+    </div>
 
     <footer class="bg-dark text-white mt-4">
         <section class="container-fluid py-3">
@@ -92,7 +106,8 @@
                 <section class="col-md-3"></section>
             </section>
             <section class="row">
-                <section class="col-md-3 text-left small align-self-end">Made by Troy ; throughout that terrible year of 2020 </section>
+                <section class="col-md-3 text-left small align-self-end">Made by Troy ; throughout that terrible year of
+                    2020 </section>
                 <section class="col-md-3 text-right small align-self-end"></section>
                 <section class="col-md-3 text-right small align-self-end"></section>
                 <section class="col-md-3 text-right small align-self-end"></section>
@@ -101,7 +116,7 @@
     </footer>
 
 
-        <script src="scripts/script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>

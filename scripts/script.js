@@ -2,14 +2,14 @@
 var questionBox = document.querySelector("#questionBox");
 var answerBox = document.querySelector("#answerBox");
 var resultBox = document.querySelector("#resultBox");
-var timerDisplay = document.querySelector("#timerDisplay");
 var testButton = document.querySelector("#tester");
 //var prevButton = document.querySelector("#prev");
 //var nextButton = document.querySelector("#next");
 var startQuiz = document.querySelector("#startQuiz");
 var saveScore = document.querySelector("#saveScore");
-var timerDisplay = document.querySelector("#timerDisplay");
 var test = document.querySelector("#test");
+var viewHighScores = document.querySelector("#showHighScores");
+var highScores=localStorage.getItem("highScores");
 
 //hacked pomodoro timer
 //var statusSpan = document.querySelector("#status");
@@ -25,7 +25,7 @@ var inputs = document.querySelector(".inputs")
 
 var totalSeconds = 0;
 var secondsElapsed = 0;
-var status = "Working";
+//var status = "Working";
 var interval;
 
 //minified the json string for ease of reading in larger code. 
@@ -36,15 +36,11 @@ var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:
   var userScore = 0;
   var userMiss = 0;
   var qIndex = 0;
-  //var quizTime = 120;
   var secondsElapsed ;
 
   //TIMER BIT AND PIECES
   var interval;
 
-  //DETERMINE THE LENGTH OF THE QUIZ
-  //var secondsLeft = 15;
-  //timerDisplay.textContent = "The quiz is " + questionBook.questions.length + " questions long. You will have " + secondsLeft + " seconds to complete this quiz."
  
 //BEGIN QUIZ
 function beginQuiz() {
@@ -99,8 +95,9 @@ function checkAnswer(questionIndex, answerIndex) {
   //IF THE ANSWER IS CORRECT 
   if (answerIndex == rightAnswer) {
     //SHOW THE USER SOME FEEDBACK
+    
     resultBox.setAttribute("class","alert alert-success");
-    resultBox.textContent = "YOU ARE SO SMART...MOVING ON";
+    resultBox.textContent = "correct, moving on...";
     
     //INCREASE THE USER SCORE + SET TO GO TO THE NEXT QUESTION
     questionIndex++;
@@ -110,13 +107,13 @@ function checkAnswer(questionIndex, answerIndex) {
     
     //IF ALL QUESTIONS ARE ANSWERED --> GO TO ENDGAME FUNCTION
     if (questionIndex > 3 ){ //THIS WORKS WHEN HARD CODED IN. 
-      console.log("you are done");
+      console.log("The quiz has been completed.");
       endGame();
       return;
       
     //IF MORE QUESTIONS EXIST - GO TO THE NEXT QUESTION
     } else {
-    console.log("Correct answer go to next question. checkAnswer -> questionIndex", questionIndex);
+    //console.log("Correct answer go to next question. checkAnswer -> questionIndex", questionIndex);
     //console.log("seconds remaining : "+ secondsLeft)
     renderQuestion(questionIndex);
     }
@@ -124,28 +121,48 @@ function checkAnswer(questionIndex, answerIndex) {
   } else {
     //IF THE ANSWER WAS WRONG - LET THE USER KNOW // HIDE MISSES?
     userMiss++;
+    // IF THE USER IS WRONG + ADD FIVE SECONDS TO THE TIME ELAPSED
     secondsElapsed += 5; 
     renderTime();
-    console.log("checkAnswer -> secondsElapsed", secondsElapsed)
-    console.log("checkAnswer -> userMiss", userMiss);
-    //reduceTime();
-    //this.element.find('#answerbox').children().eq(answerIndex).remove();
-    //answerBox.removeChild(answerBox[answerIndex]);
-    //list.removeChild(list.childNodes[0]);
+    //console.log("checkAnswer -> secondsElapsed", secondsElapsed)
+    //console.log("checkAnswer -> userMiss", userMiss);   
     
-
     resultBox.setAttribute("class","alert alert-danger");
-    resultBox.textContent = "YOU ARE SO WRONG";
+    resultBox.textContent = "you choose poorly...try again.";
   };
 }
 
+
 //STORE THE USER SCORE
-function saveHighScore(name,userScore) {
+function saveHighScore() {
 var scoreArray= [name,userScore,Date.now()]
 localStorage.setItem("highScores",JSON.stringify(scoreArray))
 console.log("saveHighScore -> saveHighScore", scoreArray)
 saveScore.style.display="hide";
 showHighScores();
+
+/*
+//HACKED HIGH SCORES
+saveHighScore = (e) => {
+  e.preventDefault();
+
+  const score = {
+      score: mostRecentScore,
+      name: username.value,
+  };
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(5);
+
+  localStorage.setItem('highScores', JSON.stringify(highScores));
+  window.location.assign('/');
+};
+
+*/
+
+
+
+
 }
 
 //SHOW ALL HIGH SCORES
@@ -164,6 +181,11 @@ answerBox.addEventListener("click", function (event) {
     checkAnswer(qIndex, aindex);
   }
 })
+
+viewHighScores.addEventListener("click",function(){
+showHighScores();
+})
+
 
 //EVENT LISTENER - BEGIN QUIZ
 startQuiz.addEventListener("click", function () {
@@ -188,7 +210,6 @@ function init() {
   var userMiss = 0
   var qIndex = 0;
   var secondsLeft = 15;
-  timerDisplay.textContent = "The quiz is " + totalQuestions + " questions long. You will have " + secondsLeft + " seconds to complete this quiz."
   answerBox.style.display="none";
   questionBox.style.display="none";
 }
@@ -206,10 +227,6 @@ function endGame(){
 //EVENT LISTENER - TEST
 //test.addEventListener("click", function (){})
 
-
-function reduceTime(){
-console.log("reduceTime -> reduceTime", reduceTime)
-};
 // hacked together scripts based on pomodoro timer
 
 // This launches the app by calling setTime() and renderTime()
@@ -260,30 +277,19 @@ function setTime() {
 }
 
 
-
-// This function does 2 things. displays the time and checks to see if time is up.
+//DISPLAY THE TIME REMAINING / IF TIME IS OUT - EXIT THE GAME
 function renderTime() {
   // When renderTime is called it sets the textContent for the timer html...
   minutesDisplay.textContent = getFormattedMinutes();
   secondsDisplay.textContent = getFormattedSeconds();
   //console.log("renderTime -> secondsDisplay.textContent", secondsDisplay.textContent)
 
- // ..and then checks to see if the time has run out
+ // IF THE TIME IS OUT - END THE GAME
   if (secondsElapsed >= totalSeconds) {
-
-    /*
-    if (status === "Working") {
-      alert("Time for a break!");
-    } else {
-      alert("Time to get back to work!");
-    }*/
-
-    //stopTimer();
     endGame();
 
   }
 }
-
 // This function is where the "time" aspect of the timer runs
 // Notice no settings are changed other than to increment the secondsElapsed var
 function startTimer() {
@@ -348,16 +354,12 @@ function getTimePreferences() {
     if (preferences.workMinutes) {
       workMinutesInput.value = preferences.workMinutes;
     }
-
-    //if (preferences.restMinutes) {
-      //restMinutesInput.value = preferences.restMinutes;
-    //}
   }
 
   // This is where the app is really kicked-off, setTime and renderTime are the two main routines.
   setTime();
   renderTime();
-}
+} 
 
 function setTimePreferences() {
   localStorage.setItem(
@@ -375,3 +377,5 @@ function setTimePreferences() {
 //statusToggle.addEventListener("change", toggleStatus);
 inputs.addEventListener("change", setTimePreferences);
 inputs.addEventListener("keyup", setTimePreferences);
+
+
