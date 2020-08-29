@@ -13,6 +13,7 @@ var highScores=localStorage.getItem("highScores");
 //MORE ELEMENTS - HACKED TOGETHER FROM POMODORO ACTIVITY
 var minutesDisplay = document.querySelector("#minutes");
 var secondsDisplay = document.querySelector("#seconds");
+var countDownClock = document.querySelector("#clock");
 var workMinutesInput = document.querySelector("#work-minutes");
 var inputs = document.querySelector(".inputs")
 
@@ -43,7 +44,9 @@ function init() {
     questionBox.style.display="none";
     answerBox.style.display="none";
     saveScore.style.display="none";
+    countDownClock.style.display="none";
 }
+
 
 //EVENT - BEGIN QUIZ
 startQuiz.addEventListener("click", function () {
@@ -59,6 +62,7 @@ function beginQuiz() {
   questionBox.style.display="block";
   answerBox.style.display="block";
   resultBox.style.display="block";
+  countDownClock.style.display="block";
 
   //HIDE OPTION TO START + SHOW HIGH SCORES
   startQuiz.style.display="none";
@@ -171,9 +175,6 @@ saveHighScore = (e) => {
 
 */
 
-
-
-
 }
 
 //SHOW ALL HIGH SCORES
@@ -213,6 +214,7 @@ function endGame(){
   resultBox.style.display="none";
   answerBox.style.display="none";
   questionBox.style.display="none";
+  countDownClock.style.display="none";
 
   //SHOW OUR WAITING ELEMENTS
   saveScore.style.display="block";

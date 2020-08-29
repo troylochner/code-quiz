@@ -21,14 +21,15 @@
 
         <span class="navbar-brand mb-0 h1">Code Quiz</span>
 
-        <form class="form-inline">
+        
             <label for="work-minutes">Minutes to complete</label>
             <input type="number" name="work" id="work-minutes" value="5" />
-            <div class="time">
-                <div id="minutes">25</div>
-                <div id="seconds">00</div>
+            <div id ="clock" class="clock">
+                <span>Time Remaining : </span>
+                <span id="minutes">25</span>
+                <span>:</span> <span id="seconds">00</span>
             </div>
-        </form>
+        
 
         <div>
             <button class="btn btn-primary btn-block" id="showHighScores">Show High Scores</button>
