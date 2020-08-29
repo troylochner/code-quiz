@@ -4,23 +4,23 @@ var answerBox = document.querySelector("#answerBox");
 var resultBox = document.querySelector("#resultBox");
 var timerDisplay = document.querySelector("#timerDisplay");
 var testButton = document.querySelector("#tester");
-var prevButton = document.querySelector("#prev");
-var nextButton = document.querySelector("#next");
+//var prevButton = document.querySelector("#prev");
+//var nextButton = document.querySelector("#next");
 var startQuiz = document.querySelector("#startQuiz");
 var saveScore = document.querySelector("#saveScore");
 var timerDisplay = document.querySelector("#timerDisplay");
 var test = document.querySelector("#test");
 
-//hacked
-var statusSpan = document.querySelector("#status");
-var statusToggle = document.querySelector("#status-toggle");
-var playButton = document.querySelector("#play");
-var pauseButton = document.querySelector("#pause");
-var stopButton = document.querySelector("#stop");
+//hacked pomodoro timer
+//var statusSpan = document.querySelector("#status");
+//var statusToggle = document.querySelector("#status-toggle");
+//var playButton = document.querySelector("#play");
+//var pauseButton = document.querySelector("#pause");
+//var stopButton = document.querySelector("#stop");
 var minutesDisplay = document.querySelector("#minutes");
 var secondsDisplay = document.querySelector("#seconds");
 var workMinutesInput = document.querySelector("#work-minutes");
-var restMinutesInput = document.querySelector("#rest-minutes");
+//var restMinutesInput = document.querySelector("#rest-minutes");
 var inputs = document.querySelector(".inputs")
 
 var totalSeconds = 0;
@@ -36,7 +36,7 @@ var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:
   var userScore = 0;
   var userMiss = 0;
   var qIndex = 0;
-  var quizTime = 120;
+  //var quizTime = 120;
   var secondsElapsed ;
 
   //TIMER BIT AND PIECES
@@ -254,6 +254,7 @@ function getFormattedSeconds() {
    It essentially resets our timer */
 function setTime() {
   var minutes = workMinutesInput.value.trim();
+  console.log("setTime -> minutes", minutes)
   clearInterval(interval);
   totalSeconds = minutes * 60;
 }
