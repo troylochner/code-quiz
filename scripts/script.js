@@ -1,45 +1,33 @@
-// identify and delcare elements on the page. 
+// ELEMENT DECLARATIONS
 var questionBox = document.querySelector("#questionBox");
 var answerBox = document.querySelector("#answerBox");
 var resultBox = document.querySelector("#resultBox");
-var testButton = document.querySelector("#tester");
-//var prevButton = document.querySelector("#prev");
-//var nextButton = document.querySelector("#next");
+//var testButton = document.querySelector("#tester");
 var startQuiz = document.querySelector("#startQuiz");
 var saveScore = document.querySelector("#saveScore");
 var test = document.querySelector("#test");
 var viewHighScores = document.querySelector("#showHighScores");
 var highScores=localStorage.getItem("highScores");
 
-//hacked pomodoro timer
-//var statusSpan = document.querySelector("#status");
-//var statusToggle = document.querySelector("#status-toggle");
-//var playButton = document.querySelector("#play");
-//var pauseButton = document.querySelector("#pause");
-//var stopButton = document.querySelector("#stop");
+//MORE ELEMENTS - HACKED TOGETHER FROM POMODORO ACTIVITY
 var minutesDisplay = document.querySelector("#minutes");
 var secondsDisplay = document.querySelector("#seconds");
 var workMinutesInput = document.querySelector("#work-minutes");
-//var restMinutesInput = document.querySelector("#rest-minutes");
 var inputs = document.querySelector(".inputs")
 
-var totalSeconds = 0;
-var secondsElapsed = 0;
-//var status = "Working";
+//GLOBAL VARIABLES
+var totalSeconds=0;
+var secondsElapsed=0 ;
 var interval;
+var userScore;
+var userMiss;
+var qIndex = 0;
+
 
 //minified the json string for ease of reading in larger code. 
 var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
 
-  //var totalQuestions = questionBook.questions.length;
-  // START AT USER SCORE AND QUESTION NUMBER
-  var userScore = 0;
-  var userMiss = 0;
-  var qIndex = 0;
-  var secondsElapsed ;
 
-  //TIMER BIT AND PIECES
-  var interval;
 
  
 //BEGIN QUIZ
