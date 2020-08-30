@@ -182,16 +182,23 @@ function checkAnswer(questionIndex, answerIndex) {
 }
 
 //STORE THE USER SCORE
-function saveHighScore(name,userScore) {
-var score = [name,userScore];
-localStorage.setItem("highScores",JSON.stringify(score))
+function saveHighScore() {
+  var name = prompt("Enter your name to save high score.");
+  if (name === null){
+  name = "undefined"
+  };
+var Obj = { 'Player': name, 'Score': userScore};
+localStorage.setItem('highScores', JSON.stringify(Obj));
+//var score = ["name":name,"Score":userScore];
+//console.log("saveHighScore -> score", userScore)
+//localStorage.setItem("highScores",JSON.stringify(score))
 resultBox.style.display="none";
 init(); //INIT WILL BLOW OUT THE CURRENT SCORE
 }
 
 //SHOW ALL HIGH SCORES
 function showHighScores(){
-  var x = localStorage.getItem("highScores");
+  var x = localStorage.getItem('highScores');
   var bestScore = JSON.parse(x).Score;
   var bestPlayer = JSON.parse(x).Player
  confirm("The best score of " + bestScore + " belongs to " + bestPlayer);
@@ -215,11 +222,8 @@ showHighScores();
 })
 
 //EVENT - SAVE SCORE
-saveScore.addEventListener("click", function () {
-  var name = prompt("Enter your name to save high score.");
-  if (name !== null){
-  saveHighScore(name,userScore);
-  }
+saveScore.addEventListener("click", function (){
+  saveHighScore();
 })
 
 //END THE GAME
