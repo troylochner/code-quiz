@@ -9,6 +9,9 @@ var saveScore = document.querySelector("#saveScore");
 var test = document.querySelector("#test");
 var viewHighScores = document.querySelector("#showHighScores");
 var highScores=localStorage.getItem("highScores");
+if (highScores===null){
+  highScores=0;
+};
 //var topScore=highScores.score;
 
 //MORE ELEMENTS - HACKED TOGETHER FROM POMODORO ACTIVITY
@@ -192,7 +195,10 @@ init(); //INIT WILL BLOW OUT THE CURRENT SCORE
 
 //SHOW ALL HIGH SCORES
 function showHighScores(){
- confirm(localStorage.getItem('highScores'));
+  var x = localStorage.getItem("highScores");
+  var bestScore = JSON.parse(x).Score;
+  var bestPlayer = JSON.parse(x).Player
+ confirm("The best score of " + bestScore + " belongs to " + bestPlayer);
 
 }
 
