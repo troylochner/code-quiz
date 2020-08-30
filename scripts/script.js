@@ -8,10 +8,7 @@ var startQuiz = document.querySelector("#startQuiz");
 var saveScore = document.querySelector("#saveScore");
 var test = document.querySelector("#test");
 var viewHighScores = document.querySelector("#showHighScores");
-var highScores=localStorage.getItem("highScores");
-if (highScores===null){
-  highScores=0;
-};
+
 //var topScore=highScores.score;
 
 //MORE ELEMENTS - HACKED TOGETHER FROM POMODORO ACTIVITY
@@ -29,7 +26,7 @@ var interval;
 var userScore;
 var userMiss;
 var qIndex;
-var currentHighScore ; 
+var currentHighScore ;
 
 init();
 //minified the json string for ease of reading in larger code.
@@ -185,10 +182,9 @@ function checkAnswer(questionIndex, answerIndex) {
 }
 
 //STORE THE USER SCORE
-function saveHighScore() {
-//var scoreArray= [name,userScore];
-var theBestScore = {Player: userName, Score: userScore};
-localStorage.setItem("highScores",JSON.stringify(theBestScore))
+function saveHighScore(name,userScore) {
+var score = [name,userScore];
+localStorage.setItem("highScores",JSON.stringify(score))
 resultBox.style.display="none";
 init(); //INIT WILL BLOW OUT THE CURRENT SCORE
 }
@@ -221,7 +217,9 @@ showHighScores();
 //EVENT - SAVE SCORE
 saveScore.addEventListener("click", function () {
   var name = prompt("Enter your name to save high score.");
+  if (name !== null){
   saveHighScore(name,userScore);
+  }
 })
 
 //END THE GAME
@@ -243,7 +241,7 @@ function endGame(){
   resultBox.setAttribute("class","alert alert-success");
   resultBox.textContent = "Your score was : " + userScore;
   stopTimer();
-  confirm("The game is over");
+  confirm("The game is over---> you can register this score if you'd like. ");
   //init();
 }
 
