@@ -9,10 +9,12 @@ var saveScore = document.querySelector("#saveScore");
 var test = document.querySelector("#test");
 var viewHighScores = document.querySelector("#showHighScores");
 var highScores=localStorage.getItem("highScores");
+//var topScore=highScores.score;
 
 //MORE ELEMENTS - HACKED TOGETHER FROM POMODORO ACTIVITY
 var minutesDisplay = document.querySelector("#minutes");
 var secondsDisplay = document.querySelector("#seconds");
+var currentScore = document.querySelector("#currentScore");
 var countDownClock = document.querySelector("#clock");
 var workMinutesInput = document.querySelector("#work-minutes");
 var inputs = document.querySelector(".inputs")
@@ -51,11 +53,12 @@ questions[0]
 */
 
 //WORKING TEMPLATE - ALL B IS CORRECT
-var questionBook = {"questions":[{"question":"Inside which HTML element do we put the JavaScript?","answer":"0","choices":[{"heading":"a","answer":"<script>"},{"heading":"b","answer":"<scripting>"},{"heading":"c","answer":"<java>"},{"heading":"d","answer":"<js>"}]},{"question":"Where is the correct place to insert a JavaScript?","answer":"2","choices":[{"heading":"a","answer":"The <head> section"},{"heading":"b","answer":"The <body> section"},{"heading":"c","answer":"Both the <head> and <body> will work."},{"heading":"d","answer":"The <footer> section"}]},{"question":"What is the correct syntax for referring to an external script called 'scriptname.js'?","answer":"0","choices":[{"heading":"a","answer":"<script src='scriptname.js'>"},{"heading":"b","answer":"<script link='scriptname.js'>"},{"heading":"c","answer":"<source src='scriptname.js'>"},{"heading":"d","answer":"<insert src='scriptname.js'>"}]},{"question":"JavaScript is the same as Java.","answer":"1","choices":[{"heading":"a","answer":"true"},{"heading":"b","answer":"false"}]},{"question":"How do you write 'Hello World in the alert box?","answer":"2","choices":[{"heading":"a","answer":"type = hello world"},{"heading":"b","answer":"Hello World"},{"heading":"c","answer":"alert('Hello World');"},{"heading":"d","answer":"execute(Hello World)"}]},{"question":"How do you call a function named 'myFunction'?","answer":"2","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"myFunction()"},{"heading":"d","answer":"wrong choices here."}]},{"question":"How to write an IF statement in JavaScript?","answer":"1","choices":[{"heading":"a","answer":"if 'i' is eqaul to 5"},{"heading":"b","answer":"if (i==5)"},{"heading":"c","answer":"if i eqauls 5"},{"heading":"d","answer":"if i=5"}]},{"question":"How do you declare a JavaScript variable?","answer":"0","choices":[{"heading":"a","answer":"var x=1"},{"heading":"b","answer":"delcare variable x"},{"heading":"c","answer":"x=1"},{"heading":"d","answer":"make(x)"}]},{"question":"How does a FOR loop start?","answer":"2","choices":[{"heading":"a","answer":"loop for i < 5"},{"heading":"b","answer":"open Loop(i<5)"},{"heading":"c","answer":"for (i=0;i<5;i++)"},{"heading":"d","answer":"for (i < 5)"}]},{"question":"How can you add a comment in a JavaScript?","answer":"3","choices":[{"heading":"a","answer":"INSERT 'comment'"},{"heading":"b","answer":"<!--[comment here-->"},{"heading":"c","answer":"|| Comment"},{"heading":"d","answer":"//my comment would go here"}]}]}
+
+//var questionBook = {"questions":[{"question":"Inside which HTML element do we put the JavaScript?","answer":"0","choices":[{"heading":"a","answer":"<script>"},{"heading":"b","answer":"<scripting>"},{"heading":"c","answer":"<java>"},{"heading":"d","answer":"<js>"}]},{"question":"Where is the correct place to insert a JavaScript?","answer":"2","choices":[{"heading":"a","answer":"The <head> section"},{"heading":"b","answer":"The <body> section"},{"heading":"c","answer":"Both the <head> and <body> will work."},{"heading":"d","answer":"The <footer> section"}]},{"question":"What is the correct syntax for referring to an external script called 'scriptname.js'?","answer":"0","choices":[{"heading":"a","answer":"<script src='scriptname.js'>"},{"heading":"b","answer":"<script link='scriptname.js'>"},{"heading":"c","answer":"<source src='scriptname.js'>"},{"heading":"d","answer":"<insert src='scriptname.js'>"}]},{"question":"JavaScript is the same as Java.","answer":"1","choices":[{"heading":"a","answer":"true"},{"heading":"b","answer":"false"}]},{"question":"How do you write 'Hello World in the alert box?","answer":"2","choices":[{"heading":"a","answer":"type = hello world"},{"heading":"b","answer":"Hello World"},{"heading":"c","answer":"alert('Hello World');"},{"heading":"d","answer":"execute(Hello World)"}]},{"question":"How do you call a function named 'myFunction'?","answer":"2","choices":[{"heading":"a","answer":"wrong choices here."},{"heading":"b","answer":"wrong choices here."},{"heading":"c","answer":"myFunction()"},{"heading":"d","answer":"wrong choices here."}]},{"question":"How to write an IF statement in JavaScript?","answer":"1","choices":[{"heading":"a","answer":"if 'i' is eqaul to 5"},{"heading":"b","answer":"if (i==5)"},{"heading":"c","answer":"if i eqauls 5"},{"heading":"d","answer":"if i=5"}]},{"question":"How do you declare a JavaScript variable?","answer":"0","choices":[{"heading":"a","answer":"var x=1"},{"heading":"b","answer":"delcare variable x"},{"heading":"c","answer":"x=1"},{"heading":"d","answer":"make(x)"}]},{"question":"How does a FOR loop start?","answer":"2","choices":[{"heading":"a","answer":"loop for i < 5"},{"heading":"b","answer":"open Loop(i<5)"},{"heading":"c","answer":"for (i=0;i<5;i++)"},{"heading":"d","answer":"for (i < 5)"}]},{"question":"How can you add a comment in a JavaScript?","answer":"3","choices":[{"heading":"a","answer":"INSERT 'comment'"},{"heading":"b","answer":"<!--[comment here-->"},{"heading":"c","answer":"|| Comment"},{"heading":"d","answer":"//my comment would go here"}]}]}
 
 //var questionBook = {"questions":[{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]},{"question":"QUESTION","answer":"1","choices":[{"heading":"a","answer":"[CHOICE A]"},{"heading":"b","answer":"[CHOICE B]"},{"heading":"c","answer":"[CHOICE C]"},{"heading":"d","answer":"[CHOICE D]"}]}]}
 
-//var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
+var questionBook={questions:[{question:"Pick a letter - the answer is a",answer:0,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"Hot damn - this is our second question",answer:1,choices:[{heading:"a",answer:"The first one"},{heading:"b",answer:"The second one"},{heading:"c",answer:"The third one."},{heading:"d",answer:"The fourth one. "}]},{question:"The third question.",answer:2,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]},{question:"The fourth question",answer:3,choices:[{heading:"a",answer:"The letter A"},{heading:"b",answer:"The letter B"},{heading:"c",answer:"The letter C"},{heading:"d",answer:"The letter D"}]}]};
  
 
 //INIT - RESET THE WINDOW
@@ -180,9 +183,11 @@ function checkAnswer(questionIndex, answerIndex) {
 
 //STORE THE USER SCORE
 function saveHighScore() {
-var scoreArray= [name,userScore,Date.now()];
-localStorage.setItem("highScores",JSON.stringify(scoreArray))
-init(); //INIT WILL BLOW OUT THE PREVIOUS SCORE
+//var scoreArray= [name,userScore];
+var theBestScore = {Player: userName, Score: userScore};
+localStorage.setItem("highScores",JSON.stringify(theBestScore))
+resultBox.style.display="none";
+init(); //INIT WILL BLOW OUT THE CURRENT SCORE
 }
 
 //SHOW ALL HIGH SCORES
@@ -210,15 +215,13 @@ showHighScores();
 //EVENT - SAVE SCORE
 saveScore.addEventListener("click", function () {
   var name = prompt("Enter your name to save high score.");
-  console.log("name", name);
-  console.log("score", userScore);
   saveHighScore(name,userScore);
 })
 
 //END THE GAME
 function endGame(){
   //HIDE THE IN QUIZ ELEMENTS
-  resultBox.style.display="none";
+  //resultBox.style.display="none";
   answerBox.style.display="none";
   questionBox.style.display="none";
   countDownClock.style.display="none";
@@ -230,6 +233,9 @@ function endGame(){
 
   userScore = ((totalSeconds-secondsElapsed) * 1000 )
 
+  //show score on page
+  resultBox.setAttribute("class","alert alert-success");
+  resultBox.textContent = "Your score was : " + userScore;
   stopTimer();
   confirm("The game is over");
   //init();
@@ -286,6 +292,7 @@ function setTime() {
 function renderTime() {
   minutesDisplay.textContent = getFormattedMinutes();
   secondsDisplay.textContent = getFormattedSeconds();
+  currentScore.textContent = ((totalSeconds-secondsElapsed)* 1000);
  // IF THE TIME IS OUT - END THE GAME
   if (secondsElapsed >= totalSeconds) {
     endGame();
